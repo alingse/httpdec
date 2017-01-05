@@ -22,6 +22,11 @@ setup(
     license='Apache 2.0',
     packages=find_packages(exclude=('tests')),
     install_requires=[
-        'requests',
+        'click',
     ],
+    entry_points={
+        'console_scripts': [
+            'httpdec = httpdec.main:httpdec',
+        ],
+    }
 )
