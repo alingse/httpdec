@@ -2,16 +2,19 @@
 from .decode import decode
 
 import click
+from io import StringIO
 import pyperclip
 import sys
 
-try:
-    from StringIO import StringIO
-except:
-    from io import StringIO
 
 stdin = sys.stdin
 stdout = sys.stdout
+
+typed = dict(
+    h='header',
+    c='cookie',
+    t='time')
+types = typed.keys() + typed.values()
 
 
 def fake_clip():
@@ -25,13 +28,6 @@ def fake_clip():
 
     fout.close = close
     return fin, fout
-
-
-typed = dict(
-    h='header',
-    c='cookie',
-    t='time')
-types = typed.keys() + typed.values()
 
 
 @click.command()
