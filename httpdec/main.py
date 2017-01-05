@@ -5,9 +5,9 @@ import click
 import pyperclip
 import sys
 
-if sys.version_info[0] == 2:
+try:
     from StringIO import StringIO
-else:
+except:
     from io import StringIO
 
 stdin = sys.stdin
@@ -27,29 +27,30 @@ def fake_clip():
     return fin, fout
 
 
+typed = dict(
+    h='header',
+    c='cookie',
+    t='time')
+types = typed.keys() + typed.values()
+
+
 @click.command()
-@click.option('-h', '--header', is_flag=True, help='decode the header')
-@click.option('-c', '--cookie', is_flag=True, help='decode the cookie')
+@click.option('-d', '--type', type=click.Choice(types), help='decode type')
 @click.option('-p', '--clip', is_flag=True, help='read/write to clipboard')
 @click.argument('input', type=click.File('r'), default=stdin)
 @click.argument('output', type=click.File('w'), default=stdout)
-def httpdec(output, input, clip, cookie, header):
+def httpdec(output, input, clip, type):
     """
     httpdec [OPTIONS] [INPUT] [OUTPUT]
 
     INPUT: the source file, default is stdin
 
     OUTPUT: the output file, default is stdout
-
-    NOTE:
-
-        1. `-h` or `-c` must specific one
     """
 
     if clip:
         input, output = fake_clip()
 
-    if not header and not cookie:
-        click.echo('`-h` `-c` must specific one')
+    type = typed[type[0]]
 
-    decode(input, output, header, cookie)
+    decode(input, output, type)

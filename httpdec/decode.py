@@ -9,5 +9,5 @@ def decode_cookie(fin, fout):
     pass
 
 
-def decode(input, output, header=False, cookie=False):
+def decode(input, output, type):
     pass
