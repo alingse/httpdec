@@ -23,6 +23,7 @@ setup(
     packages=find_packages(exclude=('tests')),
     install_requires=[
         'click',
+        'python-dateutil'
     ],
     entry_points={
         'console_scripts': [
